@@ -46,8 +46,11 @@ public class CodeblogController {
     public String savePost(@Valid Post post,
                            BindingResult result,
                            RedirectAttributes attributes){
-        if(result.hasErrors())
+        if(result.hasErrors()){
+            attributes.addFlashAttribute("message", "Verify if the required fields were filled.");
             return  "redirect:/newpost";
+        }
+
         post.setDate(LocalDate.now());
         codeblogService.save(post);
         return "redirect:/posts";
